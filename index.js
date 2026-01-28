@@ -54,7 +54,7 @@ const app = http.createServer((req, res) => {
          }
 
          res.writeHead(200,options)
-         res.end(JSON,stringify(foundedProduct))
+         res.end(JSON.stringify(foundedProduct))
         
     }
                          //hospital
@@ -73,7 +73,7 @@ const app = http.createServer((req, res) => {
          }
 
          res.writeHead(200,options)
-         res.end(JSON,stringify(foundedHospital))
+         res.end(JSON.stringify(foundedHospital))
         
     }
                          //student
@@ -92,7 +92,7 @@ const app = http.createServer((req, res) => {
          }
 
          res.writeHead(200,options)
-         res.end(JSON,stringify(foundedStudent))
+         res.end(JSON.stringify(foundedStudent))
         
     }
 
@@ -290,6 +290,96 @@ const app = http.createServer((req, res) => {
 
 
     //delete
+
+
+    if (req.url === "/delete_product"+reqId && req.method === "DELETE") {
+
+        const fileData = read_file("product.json")
+
+         const foundedProduct = fileData.find((item) => item.id === reqId)
+
+            if (!foundedProduct) {
+                res.writeHead(404, options)
+                return res.end(JSON.stringify({
+                    message : "product not found"
+                }))
+            }
+
+           fileData.forEach((item, idx) =>{
+                if (item.id===reqId) {
+                    fileData.splice(idx, 1)
+                }
+            })
+
+            res.writeHead(200,options)
+            write_file("product.json",fileData)
+            res.end(JSON.stringify({
+                message : "deleted"
+            }))
+            
+    }
+
+               ////hospital
+
+    if (req.url === "/delete_hospital"+reqId && req.method === "DELETE") {
+
+        const fileData = read_file("hospital.json")
+
+         const foundedHospital = fileData.find((item) => item.id === reqId)
+
+            if (!foundedHospital) {
+                res.writeHead(404, options)
+                return res.end(JSON.stringify({
+                    message : "hospital not found"
+                }))
+            }
+
+           fileData.forEach((item, idx) =>{
+                if (item.id===reqId) {
+                    fileData.splice(idx, 1)
+                }
+            })
+
+            res.writeHead(200,options)
+            write_file("hospital.json",fileData)
+            res.end(JSON.stringify({
+                message : "deleted"
+            }))
+            
+    }
+
+
+
+                   ///student
+
+
+    if (req.url === "/delete_student"+reqId && req.method === "DELETE") {
+        const fileData = read_file("student.json")
+
+         const foundedStudent = fileData.find((item) => item.id === reqId)
+
+            if (!foundedStudent) {
+                res.writeHead(404, options)
+                return res.end(JSON.stringify({
+                    message : "student not found"
+                }))
+            }
+
+           fileData.forEach((item, idx) =>{
+                if (item.id===reqId) {
+                    fileData.splice(idx, 1)
+                }
+            })
+
+            res.writeHead(200,options)
+            write_file("student.json",fileData)
+            res.end(JSON.stringify({
+                message : "deleted"
+            }))
+            
+    }
+
+    
 
 
 
